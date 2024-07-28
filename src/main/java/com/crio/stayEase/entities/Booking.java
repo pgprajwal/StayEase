@@ -35,6 +35,8 @@ public class Booking {
 
     private int roomsBooked;
 
+    private int guests;
+
     private Date checkInDate;
 
     private Date checkOutDate;
