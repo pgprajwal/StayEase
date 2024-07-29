@@ -7,7 +7,7 @@ import com.crio.stayEase.exchanges.BookRoomRequest;
 
 public interface BookingService {
     
-    BookingDto bookRoom(BookRoomRequest bookRoomRequest, UserDetails userDetails);
+    BookingDto bookRoom(int hotelId, BookRoomRequest bookRoomRequest, UserDetails userDetails);
 
     BookingDto checkIn(int bookingId);
 
