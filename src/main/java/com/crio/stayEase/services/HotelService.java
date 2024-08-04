@@ -9,9 +9,13 @@ public interface HotelService {
     
     HotelDto createHotel(CreateHotelRequest createHotelRequest);
 
+    HotelDto findHotelById(int hotelId);
+
     GetAllHotelsResponse findAllHotels();
 
     HotelDto updateHotel(int hotelId, UpdateHotelRequest updateHotelRequest);
+
+    HotelDto saveHotel(HotelDto hotelDto);
 
     String deleteHotel(int hotelId);
 }

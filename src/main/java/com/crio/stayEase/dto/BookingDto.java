@@ -1,8 +1,7 @@
 package com.crio.stayEase.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import com.crio.stayEase.entities.Hotel;
 import com.crio.stayEase.entities.enums.BookingStatus;
 
 import lombok.Data;
@@ -14,17 +13,17 @@ public class BookingDto {
 
     private UserDto user;
 
-    private Hotel bookedHotel;
+    private HotelDto bookedHotel;
 
     private int roomsBooked;
 
     private int guests;
 
-    private Date checkInDate;
+    private LocalDate checkInDate;
 
-    private Date checkOutDate;
+    private LocalDate checkOutDate;
 
     private BookingStatus bookingStatus;
 
-    private Date bookingDate;
+    private LocalDate bookingDate;
 }

@@ -8,9 +8,13 @@ public interface HotelRepositoryService {
     
     HotelDto createHotel(String hotelName, String location, String description, int availableRooms);
 
-    List<HotelDto> getAllHotels();
+    HotelDto findHotelById(int hotelId);
+
+    List<HotelDto> findAllHotels();
 
     HotelDto updateHotel(int hotelId, String hotelName, String location, String description, int availableRooms);
+
+    HotelDto saveHotel(HotelDto hotelDto);
 
     void deleteHotel(int hotelId);
     

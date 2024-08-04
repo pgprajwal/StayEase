@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class BookRoomRequest {
+public class BookRoomsRequest {
 
     private int roomsBooked;
 

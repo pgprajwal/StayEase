@@ -1,12 +1,11 @@
 package com.crio.stayEase.repositoryServices;
 
-import java.util.Optional;
-
 import com.crio.stayEase.dto.UserDto;
+import com.crio.stayEase.entities.enums.Role;
 
 public interface UserRepositoryService {
 
-    UserDto registerUser(String firstName, String lastName, String email, String password, String role);
+    UserDto registerUser(String firstName, String lastName, String email, String password, Role role);
 
-    Optional<UserDto> findUserByEmail(String email);
+    UserDto findUserByEmail(String email);
 }

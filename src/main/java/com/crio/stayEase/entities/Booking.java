@@ -1,6 +1,6 @@
 package com.crio.stayEase.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.crio.stayEase.entities.enums.BookingStatus;
 
@@ -37,12 +37,12 @@ public class Booking {
 
     private int guests;
 
-    private Date checkInDate;
+    private LocalDate checkInDate;
 
-    private Date checkOutDate;
+    private LocalDate checkOutDate;
 
     @Enumerated(value = EnumType.STRING)
     private BookingStatus bookingStatus;
 
-    private Date bookingDate;
+    private LocalDate bookingDate;
 }
