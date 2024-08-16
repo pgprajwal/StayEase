@@ -13,12 +13,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Booking {
     @Id
     @Column(name = "booking_id")
@@ -32,8 +36,6 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel bookedHotel;
-
-    private int roomsBooked;
 
     private int guests;
 

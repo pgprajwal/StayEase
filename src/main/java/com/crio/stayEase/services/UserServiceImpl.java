@@ -3,12 +3,13 @@ package com.crio.stayEase.services;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.crio.stayEase.dto.UserDto;
 import com.crio.stayEase.entities.enums.Role;
 import com.crio.stayEase.exceptions.InvalidCredentialsException;
+import com.crio.stayEase.exceptions.InvalidRoleException;
 import com.crio.stayEase.exchanges.LoginUserRequest;
 import com.crio.stayEase.exchanges.LoginUserResponse;
 import com.crio.stayEase.exchanges.RegisterUserRequest;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepositoryService userRepositoryService;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationProvider authenticationProvider;
 
@@ -47,11 +48,15 @@ public class UserServiceImpl implements UserService {
     }
 
     private String getEncryptedPassword(String password) {
-        return bCryptPasswordEncoder.encode(password);
+        return passwordEncoder.encode(password);
     }
 
     private Role mapToRole(String role) {
-        return Role.valueOf(role);
+        try {
+            return Role.valueOf(role);
+        } catch (Exception e) {
+            throw new InvalidRoleException("Please provide a valid role");
+        }
     }
 
     @Override

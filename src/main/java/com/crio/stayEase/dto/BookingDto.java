@@ -15,8 +15,6 @@ public class BookingDto {
 
     private HotelDto bookedHotel;
 
-    private int roomsBooked;
-
     private int guests;
 
     private LocalDate checkInDate;

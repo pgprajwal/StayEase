@@ -1,5 +1,9 @@
 package com.crio.stayEase.exchanges;
 
+import java.util.Set;
+
+import com.crio.stayEase.dto.BookingDto;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,5 +18,7 @@ public class UpdateHotelRequest {
     private String description;
 
     private int availableRooms;
+
+    private Set<BookingDto> bookingDtoList;
 
 }

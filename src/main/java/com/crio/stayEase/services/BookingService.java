@@ -3,15 +3,15 @@ package com.crio.stayEase.services;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.crio.stayEase.dto.BookingDto;
-import com.crio.stayEase.exchanges.BookRoomsRequest;
+import com.crio.stayEase.exchanges.BookRoomRequest;
 
 public interface BookingService {
     
-    BookingDto bookRooms(int hotelId, BookRoomsRequest bookRoomsRequest, UserDetails userDetails);
+    BookingDto bookRoom(int hotelId, BookRoomRequest bookRoomsRequest, UserDetails userDetails);
 
     BookingDto checkIn(int bookingId);
 
     BookingDto checkOut(int bookingId);
 
-    BookingDto cancelBooking(int bookingId);
+    String cancelBooking(int bookingId);
 }

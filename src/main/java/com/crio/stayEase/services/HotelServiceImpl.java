@@ -1,10 +1,16 @@
 package com.crio.stayEase.services;
 
 import java.util.List;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.crio.stayEase.dto.BookingDto;
 import com.crio.stayEase.dto.HotelDto;
+import com.crio.stayEase.exchanges.BookRoomRequest;
 import com.crio.stayEase.exchanges.CreateHotelRequest;
 import com.crio.stayEase.exchanges.GetAllHotelsResponse;
 import com.crio.stayEase.exchanges.UpdateHotelRequest;
@@ -15,8 +21,15 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class HotelServiceImpl implements HotelService {
-
+ 
     private final HotelRepositoryService hotelRepositoryService;
+
+    private BookingService bookingService;
+
+    @Autowired
+    public void setBookingService(@Lazy BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @Override
     public HotelDto createHotel(CreateHotelRequest createHotelRequest) {
@@ -27,6 +40,11 @@ public class HotelServiceImpl implements HotelService {
 
         HotelDto hotelDto = hotelRepositoryService.createHotel(hotelName, location, description, availableRooms);
         return hotelDto;
+    }
+
+    @Override
+    public BookingDto createBooking(int hotelId, BookRoomRequest bookRoomsRequest, UserDetails userDetails) {
+        return bookingService.bookRoom(hotelId, bookRoomsRequest, userDetails);
     }
 
     @Override
@@ -47,7 +65,8 @@ public class HotelServiceImpl implements HotelService {
         String location = updateHotelRequest.getLocation();
         String description = updateHotelRequest.getDescription();
         int availableRooms = updateHotelRequest.getAvailableRooms();
-        HotelDto hotelDto = hotelRepositoryService.updateHotel(hotelId, hotelName, location, description, availableRooms);
+        Set<BookingDto> bookingDtoList = updateHotelRequest.getBookingDtoList();
+        HotelDto hotelDto = hotelRepositoryService.updateHotel(hotelId, hotelName, location, description, availableRooms, bookingDtoList);
         return hotelDto;
     }
 
