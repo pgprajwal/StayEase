@@ -21,10 +21,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity 
 public class SecurityConfig {
 
+    private static final String[] WHITE_LIST_URLS = new String[] {
+                                                    "/users/**", 
+                                                    "/hotels",
+                                                    "/hotels/{hotelId}"
+                                                };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationProvider authenticationProvider, JwtAuthenticationFilter jwtAuthFilter) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(authorize -> authorize.requestMatchers("/**").permitAll())
+        .authorizeHttpRequests(authorize -> authorize.requestMatchers(WHITE_LIST_URLS).permitAll())
         .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
         .sessionManagement(session -> session
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -32,11 +38,6 @@ public class SecurityConfig {
                                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
-
-    // @Bean
-    // public UserDetailsService userDetailsService(UserRepositoryService userRepositoryService) {
-    //     return new UserDetailsServiceImpl(userRepositoryService);
-    // }
 
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
