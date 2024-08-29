@@ -1,6 +1,8 @@
 package com.crio.stayEase.exchanges;
 
 import java.time.LocalDate;
+
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookRoomRequest {
 
+    @Positive
     private int guests;
 
     private LocalDate checkInDate;

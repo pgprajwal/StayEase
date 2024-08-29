@@ -1,5 +1,6 @@
 package com.crio.stayEase.exchanges;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class RegisterUserRequest {
     @NotEmpty
     private String lastName;
 
-    @NotEmpty
+    @Email
     private String email;
 
     @NotEmpty

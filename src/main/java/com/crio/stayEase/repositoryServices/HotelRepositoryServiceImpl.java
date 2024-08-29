@@ -28,7 +28,7 @@ public class HotelRepositoryServiceImpl implements HotelRepositoryService {
                       .description(description)
                       .availableRooms(availableRooms)
                       .build();
-        
+
         Hotel savedHotel = hotelRepository.save(hotel);
         return Mapper.mapToHotelDto(savedHotel);
     }

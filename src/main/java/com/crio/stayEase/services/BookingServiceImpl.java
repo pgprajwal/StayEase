@@ -28,7 +28,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public BookingDto bookRoom(int hotelId, BookRoomRequest bookRoomsRequest, UserDetails userDetails) {
-        HotelDto hotelDto = hotelService.findHotelById(hotelId);
+        HotelDto hotelDto = hotelService.findHotelByIdForManager(hotelId);
         int availableRooms = hotelDto.getAvailableRooms();
         int guests = bookRoomsRequest.getGuests();
         String userEmail = userDetails.getUsername();
@@ -70,7 +70,7 @@ public class BookingServiceImpl implements BookingService {
         if(!bookingStatus.equals(BookingStatus.CHECKED_IN))
             throw new InvalidBookingStatusException("Booking status must be 'CHECKED_IN' to check out"); 
 
-        HotelDto hotelDto = hotelService.findHotelById(bookingDto.getBookedHotel().getId());
+        HotelDto hotelDto = hotelService.findHotelByIdForManager(bookingDto.getBookedHotel().getId());
         hotelDto.setAvailableRooms(hotelDto.getAvailableRooms() + 1);
         hotelService.saveHotel(hotelDto);
 
@@ -90,7 +90,7 @@ public class BookingServiceImpl implements BookingService {
         if(!(bookingStatus.equals(BookingStatus.BOOKED) && currentDate.isBefore(checkInDate)))
             throw new InvalidBookingStatusException("Booking status must be 'BOOKED' and cancellation date should be before the CHECK_IN date in order to cancel the booking");
         
-        HotelDto hotelDto = hotelService.findHotelById(bookingDto.getBookedHotel().getId());
+        HotelDto hotelDto = hotelService.findHotelByIdForManager(bookingDto.getBookedHotel().getId());
         hotelDto.setAvailableRooms(hotelDto.getAvailableRooms() + 1);
         hotelService.saveHotel(hotelDto);
 

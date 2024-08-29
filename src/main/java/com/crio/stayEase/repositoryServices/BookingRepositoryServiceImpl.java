@@ -39,7 +39,7 @@ public class BookingRepositoryServiceImpl implements BookingRepositoryService {
                           .bookingStatus(BookingStatus.BOOKED)
                           .bookingDate(LocalDate.now())
                           .build();
-
+        
         Booking savedBooking = bookingRepository.save(booking);
         return Mapper.mapToBookingDto(savedBooking);
     }

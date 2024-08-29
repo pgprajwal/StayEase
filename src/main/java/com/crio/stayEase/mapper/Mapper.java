@@ -8,6 +8,7 @@ import java.util.Set;
 import org.modelmapper.ModelMapper;
 
 import com.crio.stayEase.dto.BookingDto;
+import com.crio.stayEase.dto.HotelBasicDto;
 import com.crio.stayEase.dto.HotelDto;
 import com.crio.stayEase.dto.UserDto;
 import com.crio.stayEase.entities.Booking;
@@ -26,10 +27,46 @@ public class Mapper {
         return modelMapper.map(user, UserDto.class);
     }
 
-    public static HotelDto mapToHotelDto(Hotel hotel) {
-        return modelMapper.map(hotel, HotelDto.class);
+    private static Set<BookingDto> mapToBookingDtoSet(Set<Booking> bookings) {
+        Set<BookingDto> bookingDtoSet = new HashSet<>();
+
+        if(bookings == null)
+            return bookingDtoSet;
+            
+        for(Booking booking : bookings) {
+            bookingDtoSet.add(modelMapper.map(booking, BookingDto.class));
+        }
+
+        return bookingDtoSet;
     }
 
+    public static HotelDto mapToHotelDto(Hotel hotel) {
+        HotelDto hotelDto = HotelDto.builder()
+                            .id(hotel.getId())
+                            .name(hotel.getName())
+                            .location(hotel.getLocation())
+                            .description(hotel.getDescription())
+                            .availableRooms(hotel.getAvailableRooms())
+                            .bookings(mapToBookingDtoSet(hotel.getBookings()))
+                            .build();
+
+        return hotelDto;
+    }
+
+    public static HotelBasicDto mapToHotelBasicDto(HotelDto hotelDto) {
+        return modelMapper.map(hotelDto, HotelBasicDto.class);
+    }
+
+    public static List<HotelBasicDto> mapToHotelBasicDtoList(List<HotelDto> hotelDtoList) {
+        List<HotelBasicDto> hotelBasicDtoList = new ArrayList<>();
+
+        for(HotelDto hotelDto : hotelDtoList) {
+            hotelBasicDtoList.add(mapToHotelBasicDto(hotelDto));
+        }
+
+        return hotelBasicDtoList;
+    }
+    
     public static Hotel mapToHotel(HotelDto hotelDto) {
         return modelMapper.map(hotelDto, Hotel.class);
     }

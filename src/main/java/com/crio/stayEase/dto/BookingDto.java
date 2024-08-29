@@ -5,15 +5,17 @@ import java.time.LocalDate;
 import com.crio.stayEase.entities.enums.BookingStatus;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(exclude = {"user", "bookedHotel"})
 public class BookingDto {
 
     private int id;
 
     private UserDto user;
 
-    private HotelDto bookedHotel;
+    private HotelBasicDto bookedHotel;
 
     private int guests;
 

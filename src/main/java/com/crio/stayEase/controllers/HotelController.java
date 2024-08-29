@@ -14,13 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crio.stayEase.dto.BookingDto;
+import com.crio.stayEase.dto.HotelBasicDto;
 import com.crio.stayEase.dto.HotelDto;
 import com.crio.stayEase.exchanges.BookRoomRequest;
 import com.crio.stayEase.exchanges.CreateHotelRequest;
-import com.crio.stayEase.exchanges.GetAllHotelsResponse;
+import com.crio.stayEase.exchanges.GetAllBasicHotelsResponse;
 import com.crio.stayEase.exchanges.UpdateHotelRequest;
 import com.crio.stayEase.services.HotelService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -34,32 +36,37 @@ public class HotelController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<HotelDto> createHotel(@RequestBody CreateHotelRequest createHotelRequest) {
+    public ResponseEntity<HotelDto> createHotel(@Valid @RequestBody CreateHotelRequest createHotelRequest) {
         return ResponseEntity.ok(hotelService.createHotel(createHotelRequest));
     }
 
     @PreAuthorize("hasRole('CUSTOMER')")
     @PostMapping("/{hotelId}/book") 
-    public ResponseEntity<BookingDto> createBooking(@PathVariable(value = "hotelId") int hotelId, @RequestBody BookRoomRequest bookRoomRequest, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<BookingDto> createBooking(@PathVariable(value = "hotelId") int hotelId, @Valid @RequestBody BookRoomRequest bookRoomRequest, @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(hotelService.createBooking(hotelId, bookRoomRequest, userDetails));
     }
 
     @GetMapping("/{hotelId}")
-    public ResponseEntity<HotelDto> findHotelById(@PathVariable( value = "hotelId") int hotelId) {
-        return ResponseEntity.ok(hotelService.findHotelById(hotelId));
+    public ResponseEntity<HotelBasicDto> findHotelByIdForCustomers(@PathVariable( value = "hotelId") int hotelId) {
+        return ResponseEntity.ok(hotelService.findHotelByIdForCustomers(hotelId));
     }
 
     @GetMapping
-    public ResponseEntity<GetAllHotelsResponse> findAllHotels() {
-        return ResponseEntity.ok(hotelService.findAllHotels());
+    public ResponseEntity<GetAllBasicHotelsResponse> findAllHotelsForCustomers() {
+        return ResponseEntity.ok(hotelService.findAllHotelsForCustomers());
+    }
+
+    @PreAuthorize("hasRole('HOTEL_MANAGER')")
+    @GetMapping("/manager/{hotelId}")
+    public ResponseEntity<HotelDto> findHotelByIdForManager(@PathVariable( value = "hotelId") int hotelId) {
+        return ResponseEntity.ok(hotelService.findHotelByIdForManager(hotelId));
     }
 
     @PreAuthorize("hasRole('HOTEL_MANAGER')")
     @PutMapping("/{hotelId}")
-    public ResponseEntity<HotelDto> updateHotel(@PathVariable(value = "hotelId") int hotelId, UpdateHotelRequest updateHotelRequest) {
+    public ResponseEntity<HotelDto> updateHotel(@PathVariable(value = "hotelId") int hotelId, @Valid UpdateHotelRequest updateHotelRequest) {
         return ResponseEntity.ok(hotelService.updateHotel(hotelId, updateHotelRequest));
     }
-
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{hotelId}") 

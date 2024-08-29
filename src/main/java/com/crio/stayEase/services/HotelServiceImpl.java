@@ -9,11 +9,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.crio.stayEase.dto.BookingDto;
+import com.crio.stayEase.dto.HotelBasicDto;
 import com.crio.stayEase.dto.HotelDto;
 import com.crio.stayEase.exchanges.BookRoomRequest;
 import com.crio.stayEase.exchanges.CreateHotelRequest;
-import com.crio.stayEase.exchanges.GetAllHotelsResponse;
+import com.crio.stayEase.exchanges.GetAllBasicHotelsResponse;
 import com.crio.stayEase.exchanges.UpdateHotelRequest;
+import com.crio.stayEase.mapper.Mapper;
 import com.crio.stayEase.repositoryServices.HotelRepositoryService;
 
 import lombok.RequiredArgsConstructor;
@@ -48,15 +50,22 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public HotelDto findHotelById(int hotelId) {
+    public HotelBasicDto findHotelByIdForCustomers(int hotelId) {
         HotelDto hotelDto = hotelRepositoryService.findHotelById(hotelId);
-        return hotelDto;
+        return Mapper.mapToHotelBasicDto(hotelDto);
     }
 
     @Override
-    public GetAllHotelsResponse findAllHotels() {
+    public GetAllBasicHotelsResponse findAllHotelsForCustomers() {
         List<HotelDto> hotelDtoList = hotelRepositoryService.findAllHotels();
-        return new GetAllHotelsResponse(hotelDtoList);
+        List<HotelBasicDto> hotelBasicDtoList = Mapper.mapToHotelBasicDtoList(hotelDtoList);
+        return new GetAllBasicHotelsResponse(hotelBasicDtoList);
+    }
+
+    @Override
+    public HotelDto findHotelByIdForManager(int hotelId) {
+        HotelDto hotelDto = hotelRepositoryService.findHotelById(hotelId);
+        return hotelDto;
     }
 
     @Override
