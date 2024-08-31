@@ -75,8 +75,16 @@ public class HotelServiceImpl implements HotelService {
         String description = updateHotelRequest.getDescription();
         int availableRooms = updateHotelRequest.getAvailableRooms();
         Set<BookingDto> bookingDtoList = updateHotelRequest.getBookingDtoList();
-        HotelDto hotelDto = hotelRepositoryService.updateHotel(hotelId, hotelName, location, description, availableRooms, bookingDtoList);
-        return hotelDto;
+
+        HotelDto hotelDto = hotelRepositoryService.findHotelById(hotelId);
+
+        if(hotelName != null) hotelDto.setName(hotelName);
+        if(location != null) hotelDto.setLocation(location);
+        if(description != null) hotelDto.setDescription(description);
+        if(availableRooms > 0) hotelDto.setAvailableRooms(availableRooms);
+        if(bookingDtoList != null) hotelDto.setBookings(bookingDtoList);
+    
+        return hotelRepositoryService.saveHotel(hotelDto);
     }
 
     @Override

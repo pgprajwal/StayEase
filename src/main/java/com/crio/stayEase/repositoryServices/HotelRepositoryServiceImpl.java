@@ -1,11 +1,9 @@
 package com.crio.stayEase.repositoryServices;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
-import com.crio.stayEase.dto.BookingDto;
 import com.crio.stayEase.dto.HotelDto;
 import com.crio.stayEase.entities.Hotel;
 import com.crio.stayEase.exceptions.HotelNotFoundException;
@@ -44,27 +42,6 @@ public class HotelRepositoryServiceImpl implements HotelRepositoryService {
     public List<HotelDto> findAllHotels() {
         List<Hotel> hotels = hotelRepository.findAll();
         return Mapper.mapToHotelDtoList(hotels);
-    }
-
-    @Override
-    public HotelDto updateHotel(int hotelId, String hotelName, String location, String description,
-            int availableRooms, Set<BookingDto> bookingDtoSet) {
-        String message = "Could not find hotel with hotelId: " + hotelId;
-
-        if(!hotelRepository.existsById(hotelId))
-           throw new HotelNotFoundException(message);     
-
-        Hotel hotel = Hotel.builder()
-                      .id(hotelId)
-                      .name(hotelName)
-                      .location(location)
-                      .description(description)
-                      .availableRooms(availableRooms)
-                      .bookings(Mapper.mapToBookingSet(bookingDtoSet))
-                      .build();
-        
-        Hotel updatedHotel = hotelRepository.save(hotel);
-        return Mapper.mapToHotelDto(updatedHotel);
     }
 
     @Override
