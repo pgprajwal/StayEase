@@ -1,6 +1,6 @@
 ## Overview
 
-A RESTful API service built using Spring Boot to manage an online hotel room booking system with MySQL as the database for persisting data.
+A RESTful API service built using Spring Boot to manage an online Hotel Room Booking System with MySQL as the database for persisting data.
 
 ## Features
 
