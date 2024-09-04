@@ -88,8 +88,8 @@ public class BookingServiceImpl implements BookingService {
         LocalDate currentDate = LocalDate.now();
 
         if(!(bookingStatus.equals(BookingStatus.BOOKED) && currentDate.isBefore(checkInDate)))
-            throw new InvalidBookingStatusException("Booking status must be 'BOOKED' and cancellation date should be before the CHECK_IN date in order to cancel the booking");
-        
+            throw new InvalidBookingStatusException("Cannot cancel the booking. Booking status must be 'BOOKED' and cancellation date should be before the CHECK_IN date in order to cancel the booking");
+
         HotelDto hotelDto = hotelService.findHotelByIdForManager(bookingDto.getBookedHotel().getId());
         hotelDto.setAvailableRooms(hotelDto.getAvailableRooms() + 1);
         hotelService.saveHotel(hotelDto);
@@ -108,9 +108,9 @@ public class BookingServiceImpl implements BookingService {
         final int minRoomCapacity = 1;
 
         if(guests < minRoomCapacity)
-            throw new InvalidGuestCountException("Please provide atleast " + minRoomCapacity + " guests to continue booking");
+            throw new InvalidGuestCountException("Please provide at least " + minRoomCapacity + " guests to continue booking");
 
-        if(guests > maxRoomCapacity) 
+        if(guests > maxRoomCapacity)
             throw new InvalidGuestCountException("Provided number of guests exceeds the room capacity");
     }
 }
