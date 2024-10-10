@@ -47,21 +47,20 @@ A RESTful API service built using Spring Boot to manage an online Hotel Room Boo
    1. **MySQL database connection settings:**
 
       ```bash
-      spring.datasource.url = jdbc:mysql://localhost:3306/stay_ease
-      spring.datasource.username = root
-      spring.datasource.password = password
+      spring.datasource.url = jdbc:mysql://${mysql.host}:${mysql.port}/${mysql.database}
+      spring.datasource.username = ${mysql.username}
+      spring.datasource.password = ${mysql.password}
       ```
-      Replace `localhost`, `3306`, `root`, and `password` with your MySQL host, port, username and password respectively.
+      Replace `${mysql.host}`, `${mysql.port}`, `${mysql.database}`, `${mysql.username}` and `${mysql.password}` with your MySQL Host, Port, Database, Username and Password respectively.
    
    2. **JWT Security Key:**
       
       ```bash
-      application.security.jwt.secret.key = your-secret-key-here
+      spring.application.security.jwt.secret.key = ${jwt-secret-key}
       ```
 
-      Replace `your-secret-key-here` with your actual 256-bit JWT secret key.
-      
-  
+      Add the above configuration and replace `${jwt-secret-key}` with your actual 256-bit JWT secret key.
+
 3. Save the changes to the `application.properties` file.
 
 ### Running the Application

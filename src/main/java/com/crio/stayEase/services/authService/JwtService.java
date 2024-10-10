@@ -19,7 +19,7 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-    @Value("${application.security.jwt.secret.key}")
+    @Value("${spring.application.security.jwt.secret.key}")
     private String secretKey;
 
     private final long jwtExpiration = 30 * 60 * 1000;
